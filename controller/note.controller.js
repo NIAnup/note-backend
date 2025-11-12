@@ -52,5 +52,50 @@ return res.status(404).json(new ApiError(400,  "didn't find the data add new one
     }
 })
 
+const getNote = asyncHandler(async (req, res) => {
+  try {
+    const notes = await note.find();
 
-export { noteController , updateNote}
+    return res
+      .status(200)
+      .json(new ApiResponse(200, notes, "Data fetched successfully"));
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    return res
+      .status(500)
+      .json(new ApiResponse(500, null, "Internal server error"));
+  }
+});
+
+
+
+const deleteNote = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.query;
+    if (!id) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, null, "Missing note ID"));
+    }
+
+    const result = await note.deleteOne({ _id: id });
+
+    if (result.deletedCount === 0) {
+      return res
+        .status(404)
+        .json(new ApiResponse(404, null, "Note not found"));
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "Note deleted successfully"));
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    return res
+      .status(500)
+      .json(new ApiResponse(500, null, "Internal server error"));
+  }
+});
+
+
+export { noteController , updateNote, getNote, deleteNote}

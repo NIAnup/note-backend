@@ -9,8 +9,8 @@ const router = Route();
 
 router.post('/add-note',noteController);
 router.put('/update-note',updateNote);
-router.put('/get-note',getNote);
-router.put('/delete-note',deleteNote);
+router.get('/get-note',getNote);
+router.delete('/delete-note',deleteNote);
 
 
 

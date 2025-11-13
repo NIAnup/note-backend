@@ -1,6 +1,8 @@
 import express from 'express';
 import connectDb from './db/connectDB.js';
 import noteRouter from './routes/noteRoute.js';
+import userRouter from './routes/userRoute.js';
+
 
 
 import  dotenv from 'dotenv';
@@ -23,6 +25,7 @@ res.send("Server is Running");
 
 
 app.use('/api',noteRouter);
+app.use('/api',userRouter);
 
 
 
